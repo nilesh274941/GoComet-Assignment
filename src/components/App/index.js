@@ -8,6 +8,7 @@ import Header from './../Header';
 
 function App(props) {
   const [bag,setBag]=useState([]);
+  const [searchString,setSearchString]=useState("");
   const addToBag=(product)=>{
 	if(bag.includes(product)) return;
 	setBag([...bag,product]);
@@ -23,14 +24,17 @@ function App(props) {
 		}
 	}
   }
+	const searchProduct=(s)=>{
+		setSearchString(s);
+	}
   return (
 	<div className="app">
 		<BrowserRouter>
-			<Header  removeFromBag={removeFromBag} bag={bag} />
+			<Header  removeFromBag={removeFromBag} bag={bag} searchProduct={searchProduct}/>
 			<Switch>
 			<Route exact path="/details/:id" render={(props)=><Details {...props} addToBag={addToBag}/>} />
 			<Route path="/">
-				<Search />
+				<Search searchString={searchString}/>
 			</Route>
 		</Switch>
 	</BrowserRouter>	
