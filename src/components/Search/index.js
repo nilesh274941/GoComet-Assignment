@@ -18,6 +18,15 @@ function Search(props){
   const [showSortModal, setShowSortModal]=useState(false);
   const applyFilter=()=>{
 	  let fd=[...data];
+	  // filter by search String
+	  if(props.searchString.length>0) {
+		  const searchString=props.searchString.toLowerCase();
+		  fd=fd.filter(piece=>{
+			  if(searchString.includes(piece.brand.toLowerCase())) return true;
+			  if(piece.type.toLowerCase().includes(searchString)) return true;
+			  return false;
+		  });
+	  }
 	  // filter by gender
 	  if(gender!=="") {
 		fd=fd.filter(piece=> piece.gender===gender);
