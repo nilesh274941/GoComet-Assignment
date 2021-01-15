@@ -6,13 +6,23 @@ export default class Header extends Component {
 		super(props);
 		this.state={
 			showBagModal: false,
+			searchString: "",
+		}
+		this.searchHandler=(evt)=>{
+			if(this.state.searchString.trim().length===0) {
+				this.setState({
+					searchString: "",
+				});
+				return;
+			}
+			this.props.searchProduct(this.state.searchString);
 		}
 	}
 	render() {
 		return (
 			<div className="header1">
-				<input type="text" className="margin5" placeholder="Search" />
-				<button className="margin5">Search</button>
+				<input type="text" className="margin5" placeholder="Search" onChange={evt=>this.setState({searchString:evt.target.value})} onKeyDown={evt=>{return (evt.keyCode===13)?this.searchHandler():null}} value={this.state.searchString}/>
+				<button className="margin5" onClick={this.searchHandler}>Search</button>
 				<button className="icon-button margin5" title="WISHLIST"><i className="fa fa-bookmark"></i> WISHLIST</button>
 				<button className="icon-button margin5" title="BAG" onClick={evt=>this.setState({showBagModal: true})}><i className="fa fa-shopping-bag"></i> BAG</button>
 				<Modal
